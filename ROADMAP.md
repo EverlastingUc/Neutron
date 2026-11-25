@@ -44,7 +44,7 @@ Out of scope for v1.0.0: native machine-code compilation, a JIT, a package regis
 - [x] **8A — Difficulty mechanics & challenge suite**: the stateful six-bit decoder, post-instruction key evolution, dual circular tapes, and conditional source-symbol jumps are specified and implemented; five executable challenge fixtures are covered by automated conformance tests.
 - [ ] **8B — Empirical difficulty study**: compare Electa against matched esoteric-language tasks with independent participants. The benchmark protocol is published, but no participant study has been run; do not claim a measured difficulty ranking.
 - [x] **9 — Consoler threat model & API**: document realistic attacker capabilities, protected assets, non-goals, signal handling, privacy requirements, and the safe opt-in API contract.
-- [ ] **10 — Consoler implementation**: add opt-in defensive hooks, integrity/tamper telemetry, safe debug gating, and server-verification examples without claiming client-side enforcement is authoritative.
+- [x] **10 — Consoler implementation**: add opt-in bounded signal reporting, validated event types/codes, development-only diagnostics, callback failure containment, and a tested server-side authorization example. No DevTools blocking or client-side security claims.
 - [ ] **11 — Quality & security hardening**: fuzzing, adversarial tests, resource exhaustion tests, dependency review, and security documentation.
 - [ ] **12 — Documentation & examples**: beginner setup, language tutorial, reference, REPL guide, Consoler integration, FAQ, and architecture diagrams.
 - [ ] **13 — Release engineering**: CI, cross-platform checks, versioning, changelog, license review, reproducible release checks, and v1.0.0 acceptance checklist.
