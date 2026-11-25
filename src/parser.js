@@ -1,4 +1,4 @@
-import { lex } from "./lexer.js";
+import { lex, SOURCE_ALPHABET } from "./lexer.js";
 
 export class ElectaParseError extends Error {
   constructor(message, { code = "E007", line, column, offset } = {}) {
@@ -35,6 +35,7 @@ export function parseSymbols(symbols) {
       symbol.value > 63 ||
       typeof symbol.character !== "string" ||
       symbol.character.length !== 1 ||
+      SOURCE_ALPHABET[symbol.value] !== symbol.character ||
       !Number.isInteger(symbol.offset) ||
       symbol.offset <= previousOffset ||
       !Number.isInteger(symbol.line) ||
