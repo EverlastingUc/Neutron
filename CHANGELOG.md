@@ -7,7 +7,7 @@ This project follows Semantic Versioning. Until v1.0.0, public APIs and language
 ## [Unreleased]
 
 ### Added
-- Release acceptance checklist and cross-platform CI coverage.
+- Release acceptance checklist, dependency-free release preflight, package-content whitelist, and cross-platform CI coverage.
 
 ## [0.1.0] - 2026-11-25
 
