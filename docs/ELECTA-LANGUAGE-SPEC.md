@@ -117,9 +117,9 @@ Stable error codes for v1.0.0:
 
 Required host-configurable limits:
 
-- Maximum source bytes: 1 MiB by default.
-- Maximum input bytes: 1 MiB by default.
-- Maximum fuel: 1,000,000 instructions by default.
+- Maximum source bytes: 1 MiB (hard limit).
+- Maximum input bytes: 1 MiB by default; host configuration may raise it to 16 MiB.
+- Maximum fuel: 1,000,000 instructions by default; hard ceiling 10,000,000.
 - Tape sizes are fixed at 256 cells each in v1.0.0.
 - No filesystem, network, process, clock, or environment access is available to Electa programs.
 
