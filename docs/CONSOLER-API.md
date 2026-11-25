@@ -1,21 +1,22 @@
-# Consoler API Design
+# Consoler API
 
-Status: v0.1 proposed contract for the first implementation. See [the threat model](CONSOLER-THREAT-MODEL.md) before integrating it.
+Status: implemented in `src/consoler.js`. Read the [threat model](CONSOLER-THREAT-MODEL.md) before integrating it.
 
-## Design rule
+## Security boundary
 
-Consoler does not detect or block DevTools. It provides a small opt-in channel for application code to report its own typed anomaly signals. It performs no network requests and makes no access-control decisions.
+Consoler does not detect or block DevTools. It provides an opt-in channel for application code to report its own typed anomaly signals. It performs no network requests and makes no access-control decisions.
 
-## Proposed API
+## Signal reporting
 
 ```js
 import { createConsoler } from "./src/consoler.js";
 
+const pendingSignals = [];
 const consoler = createConsoler({
   maxSignals: 20,
   onSignal(signal) {
-    // The application may forward this low-trust event to its own backend.
-    // The backend must validate it and must not treat it as proof of abuse.
+    // Keep this synchronous. The application owns any later delivery.
+    pendingSignals.push(signal);
   }
 });
 
@@ -24,10 +25,9 @@ consoler.reportSignal({
   code: "PROFILE_STATE_INVALID"
 });
 
+// Call when the owning application component is torn down.
 consoler.dispose();
 ```
-
-## Contract
 
 ### `createConsoler(options)`
 
@@ -39,20 +39,43 @@ consoler.dispose();
 
 Accepts only:
 
-- `type`: one of `state-mismatch`, `integrity-mismatch`, or `unexpected-transition`.
+- `type`: `state-mismatch`, `integrity-mismatch`, or `unexpected-transition`.
 - `code`: optional application-defined identifier matching `^[A-Z0-9_-]{1,32}$`.
 
-Returns `true` if the signal passed local validation and the instance budget; otherwise returns `false`. The callback receives a fresh, frozen object with only `version: 1`, `type`, and optional `code`.
+Returns `true` if the signal passed local validation and the instance budget; otherwise returns `false`. The callback receives a fresh, frozen object containing only `version: 1`, `type`, and optional `code`.
 
-No arbitrary metadata, exception objects, URLs, DOM snapshots, or user content are accepted.
+Unknown fields, symbols, accessors, unsafe codes, and invalid event types are rejected. The per-instance budget is incremented before callback invocation to prevent re-entrant bypass. Callback exceptions are contained; a callback that returns a Promise is treated as unsupported and returns `false`.
 
 ### `dispose()`
 
 Disables further reporting for the instance. Calls after disposal return `false`.
 
-## Callback behavior
+## Development-only diagnostics
 
-The callback is invoked synchronously. If it throws, Consoler catches the exception and returns `false`; it does not rethrow application callback errors or attempt a network retry. The integrating application owns delivery, server-side validation, retention, and privacy disclosures.
+```js
+import { createDiagnostics } from "./src/consoler.js";
+
+const diagnostics = createDiagnostics({
+  mode: import.meta.env?.DEV ? "development" : "production",
+  sink(event) {
+    // Send to a development-only logger or test collector.
+  }
+});
+
+diagnostics.debug("PROFILE_PANEL_READY");
+```
+
+`createDiagnostics(options)` defaults to `production`, where `debug()` is a no-op. In development mode, it forwards only short codes matching `^[A-Z0-9_-]{1,32}$` to the supplied sink. It does not use the global console automatically and does not accept arbitrary log payloads.
+
+## Server-side authorization example
+
+See [examples/consoler/server-authorization.js](../examples/consoler/server-authorization.js). It demonstrates authentication, authorization, request validation, and persistence as separate server-side steps. The route does not consult client-side Consoler signals.
+
+## Callback and privacy behavior
+
+Callbacks run synchronously. Consoler catches callback failures and does not retry, persist, or transmit events. The integrating application owns delivery, server-side validation, retention, and privacy disclosures.
+
+No arbitrary metadata, exception objects, URLs, DOM snapshots, or user content are accepted. Consoler does not collect passwords, tokens, keystrokes, or browsing data.
 
 ## Non-guarantees
 
