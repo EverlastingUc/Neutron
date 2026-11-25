@@ -5,8 +5,8 @@ import { parse, parseSymbols, ElectaParseError } from "../src/parser.js";
 test("parser returns an immutable program containing source symbols", () => {
   const program = parse("A B!?");
   assert.equal(program.type, "ElectaProgram");
-  assert.equal(program.length, 3);
-  assert.deepEqual(program.symbols.map((symbol) => symbol.value), [10, 62, 63]);
+  assert.equal(program.length, 4);
+  assert.deepEqual(program.symbols.map((symbol) => symbol.value), [10, 11, 62, 63]);
   assert.ok(Object.isFrozen(program));
   assert.ok(Object.isFrozen(program.symbols));
   assert.ok(Object.isFrozen(program.symbols[0]));
