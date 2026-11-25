@@ -110,7 +110,11 @@ export function createDiagnostics(options = {}) {
       return false;
     }
     try {
-      sink(Object.freeze({ level: "debug", code }));
+      const sinkResult = sink(Object.freeze({ level: "debug", code }));
+      if (sinkResult && typeof sinkResult.then === "function") {
+        Promise.resolve(sinkResult).catch(noop);
+        return false;
+      }
       return true;
     } catch {
       return false;
