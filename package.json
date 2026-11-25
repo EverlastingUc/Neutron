@@ -14,5 +14,14 @@
     "test:watch": "node --test --watch",
     "repl": "node src/cli.js --repl"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "files": [
+    "src/",
+    "examples/",
+    "docs/",
+    "challenges/",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ]
 }
