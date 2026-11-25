@@ -1,5 +1,7 @@
 const DEFAULT_FUEL = 1_000_000;
+const MAX_FUEL = 10_000_000;
 const DEFAULT_MAX_INPUT_BYTES = 1024 * 1024;
+const MAX_INPUT_BYTES = 16 * 1024 * 1024;
 const TAPE_SIZE = 256;
 
 export class ElectaRuntimeError extends Error {
@@ -18,10 +20,21 @@ function normalizeInput(input, maxInputBytes) {
   if (input === undefined) {
     bytes = new Uint8Array(0);
   } else if (input instanceof Uint8Array) {
+    if (input.byteLength > maxInputBytes) {
+      throw new ElectaRuntimeError("Input exceeds the configured byte limit.", { code: "E004" });
+    }
     bytes = new Uint8Array(input);
   } else if (Array.isArray(input)) {
-    if (!input.every((value) => Number.isInteger(value) && value >= 0 && value <= 255)) {
-      throw new TypeError("Electa input arrays must contain only integer bytes (0–255).");
+    if (input.length > maxInputBytes) {
+      throw new ElectaRuntimeError("Input exceeds the configured byte limit.", { code: "E004" });
+    }
+    for (let index = 0; index < input.length; index += 1) {
+      if (!Object.hasOwn(input, index) ||
+          !Number.isInteger(input[index]) ||
+          input[index] < 0 ||
+          input[index] > 255) {
+        throw new TypeError("Electa input arrays must contain only dense integer bytes (0–255).");
+      }
     }
     bytes = Uint8Array.from(input);
   } else {
@@ -69,11 +82,11 @@ export function execute(program, options = {}) {
 
   const fuel = options.fuel ?? DEFAULT_FUEL;
   const maxInputBytes = options.maxInputBytes ?? DEFAULT_MAX_INPUT_BYTES;
-  if (!Number.isSafeInteger(fuel) || fuel < 0) {
-    throw new RangeError("fuel must be a non-negative safe integer.");
+  if (!Number.isSafeInteger(fuel) || fuel < 0 || fuel > MAX_FUEL) {
+    throw new RangeError(`fuel must be an integer from 0 through ${MAX_FUEL}.`);
   }
-  if (!Number.isSafeInteger(maxInputBytes) || maxInputBytes < 0) {
-    throw new RangeError("maxInputBytes must be a non-negative safe integer.");
+  if (!Number.isSafeInteger(maxInputBytes) || maxInputBytes < 0 || maxInputBytes > MAX_INPUT_BYTES) {
+    throw new RangeError(`maxInputBytes must be an integer from 0 through ${MAX_INPUT_BYTES}.`);
   }
 
   const input = normalizeInput(options.input, maxInputBytes);
