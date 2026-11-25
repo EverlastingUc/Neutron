@@ -73,7 +73,7 @@ See [examples/consoler/server-authorization.js](../examples/consoler/server-auth
 
 ## Callback and privacy behavior
 
-Callbacks run synchronously. Consoler catches callback failures and does not retry, persist, or transmit events. The integrating application owns delivery, server-side validation, retention, and privacy disclosures.
+Callbacks and diagnostic sinks run synchronously. Consoler catches callback failures; callbacks that return Promises are unsupported and reported as failures. Consoler does not retry, persist, or transmit events. The integrating application owns delivery, server-side validation, retention, and privacy disclosures.
 
 No arbitrary metadata, exception objects, URLs, DOM snapshots, or user content are accepted. Consoler does not collect passwords, tokens, keystrokes, or browsing data.
 
