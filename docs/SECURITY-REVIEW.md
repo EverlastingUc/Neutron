@@ -7,7 +7,7 @@ Review baseline: 2026-11-25. This is an engineering self-review, not an independ
 - Runtime dependencies: none.
 - Development dependencies: none.
 - Test runner: Node.js built-in `node:test`.
-- CI matrix: Node.js 20, 22, and 24.
+- CI matrix: Node.js 22, 24, and 26.
 - Runtime modules use Node.js built-ins only.
 
 ## Electa controls
