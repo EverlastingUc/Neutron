@@ -15,7 +15,7 @@ console.log(result.status);       // HALTED
 console.log([...result.output]);  // [1]
 ```
 
-The source above increments the first data cell, emits its byte value, and halts. The runtime returns raw bytes to the host API; the CLI/REPL presentation layer is responsible for rendering those bytes in canonical Electa notation.
+The source above increments the first data cell, emits its byte value, and halts. The runtime returns raw bytes to the host API. Use `formatResult()` from `src/format.js` to render a runtime result in canonical Electa notation.
 
 ## Execution options
 
@@ -40,6 +40,10 @@ A successful call returns:
 - `state`: final `pc`, `dp`, `cp`, `key`, and copies of the data and control tapes.
 
 The tape arrays in `state` are snapshots. Mutating them cannot change the completed execution.
+
+## Canonical output formatting
+
+`formatByte(value)` renders a byte as a two-digit uppercase hexadecimal atom such as `~41`. `formatBytes(bytes)` renders a sequence such as `[ ~41 ~42 ]`, with the empty sequence written `[ ]`. `formatResult(result)` combines the sequence and execution status, for example `< [ ~41 ~42 ] ; HALTED >` or `< [ ] ; FUEL >`. The formatter validates all bytes and rejects unknown result statuses rather than silently printing host values.
 
 ## Runtime errors
 
