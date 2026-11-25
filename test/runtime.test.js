@@ -99,24 +99,35 @@ function encodeOpcodes(opcodes) {
   let key = 0;
   let dp = 0;
   let cp = 0;
+  let pc = 0;
   const data = new Uint8Array(256);
   const control = new Uint8Array(256);
-  let pc = 0;
   let source = "";
 
   for (const opcode of opcodes) {
     source += alphabet[(opcode ^ key) & 63];
     let nextPC = pc + 1;
+    const cell = data[dp];
     switch (opcode) {
-      case 1: data[dp] = (data[dp] + 1) & 255; break;
+      case 0: break;
+      case 1: data[dp] = (cell + 1) & 255; break;
+      case 2: data[dp] = (cell - 1) & 255; break;
+      case 3: dp = (dp + 1) & 255; break;
+      case 4: dp = (dp - 1) & 255; break;
+      case 5: break;
+      case 6: data[dp] = 0; break;
+      case 7: if (cell === 0) nextPC = pc + 2 + control[cp]; break;
+      case 8: if (cell !== 0) nextPC = Math.max(0, pc - 2 - control[cp]); break;
       case 9: control[cp] = (control[cp] + 1) & 255; break;
+      case 10: control[cp] = (control[cp] - 1) & 255; break;
+      case 11: cp = (cp + 1) & 255; break;
+      case 12: cp = (cp - 1) & 255; break;
+      case 13: data[dp] = cell ^ control[cp]; break;
       case 14: {
         const shift = control[cp] & 7;
-        const value = data[dp];
-        data[dp] = shift === 0 ? value : ((value << shift) | (value >>> (8 - shift))) & 255;
+        data[dp] = shift === 0 ? cell : ((cell << shift) | (cell >>> (8 - shift))) & 255;
         break;
       }
-      case 5: break;
       case 15: break;
       default: throw new Error("Unsupported opcode in test encoder.");
     }
@@ -126,11 +137,19 @@ function encodeOpcodes(opcodes) {
   return source;
 }
 
-test("JZ skips one source symbol when the current data cell is zero", () => {
-  // JZ at PC 0 jumps to PC 2; the symbol at PC 1 is never decoded.
-  // The post-JZ key is 9, so source symbol 6 decodes to HALT (15).
-  const result = execute(parse("7?6"));
+test("DEC wraps a zero data cell to 255", () => {
+  const result = execute(parse(encodeOpcodes([2, 5, 15])));
+  assert.deepEqual([...result.output], [255]);
+});
+
+test("MIX XORs the data and control cells", () => {
+  const result = execute(parse(encodeOpcodes([1, 9, 13, 5, 15])));
+  assert.deepEqual([...result.output], [0]);
+});
+
+test("JNZ jumps backward when data is nonzero and then falls through at zero", () => {
+  const result = execute(parse(encodeOpcodes([1, 3, 0, 8, 15])));
   assert.equal(result.status, "HALTED");
-  assert.equal(result.steps, 2);
-  assert.equal(result.state.pc, 3);
+  assert.equal(result.steps, 7);
+  assert.equal(result.state.dp, 1);
 });
