@@ -39,3 +39,10 @@ test("lexer rejects non-ASCII lookalikes and Unicode whitespace", () => {
 test("lexer rejects non-string input", () => {
   assert.throws(() => lex(null), TypeError);
 });
+
+test("lexer enforces the one-megabyte UTF-8 source limit", () => {
+  assert.throws(
+    () => lex("A".repeat(1024 * 1024 + 1)),
+    (error) => error instanceof ElectaLexError && error.code === "E005"
+  );
+});
