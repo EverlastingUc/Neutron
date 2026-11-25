@@ -28,7 +28,7 @@ npm test
 npm pack --dry-run
 ```
 
-CI additionally checks Node.js 22, 24, and 26 on Linux, Windows, and macOS.
+CI additionally checks Node.js 22, 24, and 26 LTS on Linux, Windows, and macOS.
 
 ## Commit hygiene
 
