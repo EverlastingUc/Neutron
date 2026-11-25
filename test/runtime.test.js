@@ -147,9 +147,10 @@ test("MIX XORs the data and control cells", () => {
   assert.deepEqual([...result.output], [0]);
 });
 
-test("JNZ jumps backward when data is nonzero and then falls through at zero", () => {
-  const result = execute(parse(encodeOpcodes([1, 3, 0, 8, 15])));
-  assert.equal(result.status, "HALTED");
-  assert.equal(result.steps, 7);
-  assert.equal(result.state.dp, 1);
+test("JNZ jumps backward while the current data cell is nonzero", () => {
+  const result = execute(parse(encodeOpcodes([1, 8])), { fuel: 3 });
+  assert.equal(result.status, "FUEL");
+  assert.equal(result.steps, 3);
+  assert.equal(result.state.pc, 1);
+  assert.equal(result.state.data[0], 2);
 });
