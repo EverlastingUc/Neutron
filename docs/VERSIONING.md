@@ -1,6 +1,6 @@
 # Versioning and Release Policy
 
-Neutron uses Semantic Versioning for repository releases.
+Neutron uses Semantic Versioning for repository releases. The supported Node.js runtime lines are 22, 24, and 26 LTS; the package engine range is `^22 || ^24 || ^26`.
 
 - **MAJOR**: incompatible public API changes or incompatible Electa language semantics after v1.0.0.
 - **MINOR**: backward-compatible functionality additions.
