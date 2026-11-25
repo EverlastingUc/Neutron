@@ -38,7 +38,7 @@ Out of scope for v1.0.0: native machine-code compilation, a JIT, a package regis
 - [x] **2 — Toolchain foundation**: choose a maintainable implementation stack; create CLI skeleton, configuration, formatting/linting, and test runner.
 - [x] **3 — Lexer and source model**: tokenize .el input, track spans, reject malformed encodings deterministically.
 - [x] **4 — Parser and validation**: parse source into a validated representation; define precise syntax and error behavior.
-- [ ] **5 — Electa runtime**: implement the abstract machine, memory model, instruction semantics, execution fuel, and bounded execution.
+- [x] **5 — Electa runtime**: implement the abstract machine, memory model, instruction semantics, execution fuel, and bounded execution. Runtime API documented; conformance tests cover arithmetic, tape wraparound, I/O, jumps, reserved opcodes, and fuel.
 - [ ] **6 — Canonical Electa I/O**: implement the Electa value grammar and ensure every language-level REPL result is rendered as Electa, never raw host values.
 - [ ] **7 — CLI and REPL**: run files, interactive input, deterministic output, exit codes, and diagnostics.
 - [ ] **8 — Difficulty mechanisms**: implement the language's distinctive obfuscation/transformation mechanics and publish challenge fixtures; measure difficulty rather than merely asserting it.
