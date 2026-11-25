@@ -25,7 +25,7 @@ function printHelp(stdout) {
     "",
     "Options:",
     "  --repl              Start the interactive Electa REPL.",
-    "  --fuel <number>     Set the instruction budget (default: 1000000).",
+    "  --fuel <number>     Set the instruction budget (default: 1000000; max: 10000000).",
     "  --input <file>      Read program input bytes from a file.",
     "  -h, --help          Show this help.",
     "  -v, --version       Show the Electa version.",
