@@ -1,3 +1,5 @@
+const MAX_SOURCE_BYTES = 1024 * 1024;
+
 export const SOURCE_ALPHABET =
   "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!?";
 
@@ -26,6 +28,10 @@ export class ElectaLexError extends Error {
 export function lex(source) {
   if (typeof source !== "string") {
     throw new TypeError("Electa source must be a string.");
+  }
+
+  if (Buffer.byteLength(source, "utf8") > MAX_SOURCE_BYTES) {
+    throw new ElectaLexError("Source exceeds the 1 MiB limit.", { code: "E005" });
   }
 
   const symbols = [];
