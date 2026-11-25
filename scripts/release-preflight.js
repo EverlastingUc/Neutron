@@ -17,7 +17,7 @@ async function main() {
     throw new Error("private must remain true until npm publication is explicitly approved.");
   }
   if (packageJson.license !== "MIT") throw new Error("package.json license must match LICENSE.");
-  if (packageJson.engines?.node !== ">=22") throw new Error("Node.js >=22 must be declared.");
+  if (packageJson.engines?.node !== "^22 || ^24 || ^26") throw new Error("Node.js LTS support must be declared as ^22 || ^24 || ^26.");
   if (Object.keys(packageJson.dependencies ?? {}).length > 0 ||
       Object.keys(packageJson.devDependencies ?? {}).length > 0) {
     throw new Error("Unexpected package dependencies: review and document them before release.");
