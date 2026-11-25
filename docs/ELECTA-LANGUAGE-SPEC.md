@@ -113,6 +113,7 @@ Stable error codes for v1.0.0:
 - E004 InputLimitExceeded
 - E005 SourceLimitExceeded
 - E006 InvalidUtf8
+- E007 InvalidTokenStream (invalid internal lexer/parser token stream; not normally user-triggerable from source text)
 
 Required host-configurable limits:
 
