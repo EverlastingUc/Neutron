@@ -148,9 +148,19 @@ test("MIX XORs the data and control cells", () => {
 });
 
 test("JNZ jumps backward while the current data cell is nonzero", () => {
-  const result = execute(parse(encodeOpcodes([1, 8])), { fuel: 3 });
+  // INC changes the key to 3; B (index 11) therefore decodes to JNZ (8).
+  const result = execute(parse("1B"), { fuel: 2 });
   assert.equal(result.status, "FUEL");
-  assert.equal(result.steps, 3);
-  assert.equal(result.state.pc, 1);
-  assert.equal(result.state.data[0], 2);
+  assert.equal(result.steps, 2);
+  assert.equal(result.state.pc, 0);
+  assert.equal(result.state.data[0], 1);
+});
+
+test("JZ skips one source symbol when the current data cell is zero", () => {
+  // JZ at PC 0 jumps to PC 2; the symbol at PC 1 is never decoded.
+  // The post-JZ key is 9, so source symbol 6 decodes to HALT (15).
+  const result = execute(parse("7?6"));
+  assert.equal(result.status, "HALTED");
+  assert.equal(result.steps, 2);
+  assert.equal(result.state.pc, 3);
 });
