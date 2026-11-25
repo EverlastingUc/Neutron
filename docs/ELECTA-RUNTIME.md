@@ -24,10 +24,10 @@ The source above increments the first data cell, emits its byte value, and halts
 | Option | Default | Meaning |
 |---|---:|---|
 | `input` | empty byte sequence | Input as a `Uint8Array` or array of integers from 0 through 255. |
-| `fuel` | 1,000,000 | Maximum number of instructions executed. |
-| `maxInputBytes` | 1,048,576 | Maximum accepted input size in bytes. |
+| `fuel` | 1,000,000 | Maximum number of instructions executed; hard ceiling 10,000,000. |
+| `maxInputBytes` | 1,048,576 | Maximum accepted input size; hard ceiling 16 MiB. |
 
-Invalid option types or values throw a host-side `TypeError` or `RangeError`. Input exceeding its configured limit throws `ElectaRuntimeError` with code `E004`.
+Invalid option types or values throw a host-side `TypeError` or `RangeError`. Input exceeding its configured limit throws `ElectaRuntimeError` with code `E004`. Oversized and sparse input arrays are rejected before copying.
 
 ## Result shape
 
