@@ -117,3 +117,9 @@ test("CLI enforces the source byte limit before parsing", () => {
     rmSync(directory, { recursive: true, force: true });
   }
 });
+
+test("CLI rejects fuel budgets above the hard ceiling", () => {
+  const result = run(["--repl", "--fuel", "10000001"], "");
+  assert.equal(result.status, 2);
+  assert.match(result.stderr, /--fuel must be an integer/);
+});
