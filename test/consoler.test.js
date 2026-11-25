@@ -129,3 +129,11 @@ test("Consoler contains proxy traps and asynchronous callback mistakes", () => {
   });
   assert.equal(asyncCallback.reportSignal({ type: "state-mismatch" }), false);
 });
+
+test("diagnostics contain asynchronous sink mistakes", () => {
+  const diagnostics = createDiagnostics({
+    mode: "development",
+    sink: () => Promise.reject(new Error("async sink is unsupported"))
+  });
+  assert.equal(diagnostics.debug("APP_READY"), false);
+});
