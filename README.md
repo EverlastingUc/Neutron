@@ -9,7 +9,7 @@
 
 The stable-release plan and phase gates are tracked in [ROADMAP.md](ROADMAP.md). The reusable delegation brief for another AI working on Consoler is [docs/CONSOLER-AI-PROMPT.md](docs/CONSOLER-AI-PROMPT.md).
 
-All project work is currently tracked directly on `main`. Consoler's [threat model](docs/CONSOLER-THREAT-MODEL.md), [API contract](docs/CONSOLER-API.md), [server authorization example](examples/consoler/server-authorization.js), and [AI delegation prompt](docs/CONSOLER-AI-PROMPT.md) define its security boundaries and integration pattern.
+All project work is currently tracked directly on `main`. Consoler's [threat model](docs/CONSOLER-THREAT-MODEL.md), [API contract](docs/CONSOLER-API.md), [integration guide](docs/CONSOLER-INTEGRATION.md), [server authorization example](examples/consoler/server-authorization.js), and [AI delegation prompt](docs/CONSOLER-AI-PROMPT.md) define its security boundaries and integration pattern.
 
 ## Development
 
