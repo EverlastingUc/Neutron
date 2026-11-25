@@ -42,13 +42,13 @@ For each source symbol at PC:
 
 1. Let S be its alphabet index (0–63).
 2. Decode opcode O = (S XOR K) AND 63.
-3. Execute O according to the instruction table.
-4. After execution, update K using the *post-instruction* state:
+3. Execute O according to the instruction table and determine the resulting next PC.
+4. Update K using the *post-instruction* state and the resulting next PC:
 
    K = ( (K * 17) + O + D + (DP * 3) + (CP * 5) + (PC AND 63) ) AND 63
 
    where D is the value of the data cell at the current DP after the instruction.
-5. Advance PC according to the instruction's control-flow rule. If an instruction changes PC explicitly, the key update uses the destination PC.
+5. The next PC is the ordinary PC + 1 or the explicit jump destination as defined below. The key update always uses this next PC.
 
 All arithmetic in the key update is integer arithmetic. AND is bitwise AND. Multiplication and addition use unbounded mathematical integers before the final AND 63.
 
@@ -83,7 +83,7 @@ Opcodes not listed below are reserved and MUST halt with a ReservedOpcode error.
 - Jumps are measured in source symbols, not decoded instructions.
 - A PC at or beyond program length halts successfully.
 - A backward jump clamps at zero; it never wraps.
-- Key update occurs once after every executed instruction, including HALT, before final termination.
+- Key update occurs once after every executed instruction, including HALT, using the resulting next PC before final termination.
 
 ## 6. I/O and canonical Electa output
 
