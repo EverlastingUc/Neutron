@@ -30,41 +30,41 @@ export function createConsoler(options = {}) {
 
   function reportSignal(input) {
     if (disposed || emitted >= maxSignals) return false;
-    if (
-      input === null ||
-      typeof input !== "object" ||
-      Array.isArray(input) ||
-      (Object.getPrototypeOf(input) !== Object.prototype && Object.getPrototypeOf(input) !== null)
-    ) {
-      return false;
-    }
+    try {
+      if (
+        input === null ||
+        typeof input !== "object" ||
+        Array.isArray(input) ||
+        (Object.getPrototypeOf(input) !== Object.prototype && Object.getPrototypeOf(input) !== null)
+      ) {
+        return false;
+      }
 
-    const keys = Reflect.ownKeys(input);
-    if (keys.some((key) => typeof key !== "string" || (key !== "type" && key !== "code"))) {
-      return false;
-    }
+      const keys = Reflect.ownKeys(input);
+      if (keys.some((key) => typeof key !== "string" || (key !== "type" && key !== "code"))) {
+        return false;
+      }
 
-    const descriptors = Object.getOwnPropertyDescriptors(input);
-    if (Object.values(descriptors).some((descriptor) => !("value" in descriptor))) {
-      return false;
-    }
+      const descriptors = Object.getOwnPropertyDescriptors(input);
+      if (Object.values(descriptors).some((descriptor) => !("value" in descriptor))) {
+        return false;
+      }
 
-    const { type, code } = input;
-    if (!SIGNAL_TYPES.has(type)) return false;
-    if (code !== undefined && (typeof code !== "string" || !CODE_PATTERN.test(code))) {
-      return false;
-    }
+      const { type, code } = input;
+      if (!SIGNAL_TYPES.has(type)) return false;
+      if (code !== undefined && (typeof code !== "string" || !CODE_PATTERN.test(code))) {
+        return false;
+      }
 
-    const signal = Object.freeze({
-      version: 1,
-      type,
-      ...(code === undefined ? {} : { code })
-    });
+      const signal = Object.freeze({
+        version: 1,
+        type,
+        ...(code === undefined ? {} : { code })
+      });
 
-    // Increment before calling user code to prevent re-entrant budget bypass.
-    emitted += 1;
-    if (onSignal) {
-      try {
+      // Increment before calling user code to prevent re-entrant budget bypass.
+      emitted += 1;
+      if (onSignal) {
         const callbackResult = onSignal(signal);
         if (callbackResult && typeof callbackResult.then === "function") {
           // The API is intentionally synchronous; avoid an unhandled rejection
@@ -72,11 +72,12 @@ export function createConsoler(options = {}) {
           Promise.resolve(callbackResult).catch(noop);
           return false;
         }
-      } catch {
-        return false;
       }
+      return true;
+    } catch {
+      // Proxies, getters, and application callbacks are untrusted input paths.
+      return false;
     }
-    return true;
   }
 
   function dispose() {
