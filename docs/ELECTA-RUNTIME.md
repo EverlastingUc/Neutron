@@ -1,6 +1,6 @@
 # Electa Runtime API
 
-The reference runtime is implemented in `src/runtime.js`. It executes only programs created by `parse()` from `src/parser.js`.
+The reference runtime is implemented in `src/runtime.js`. It executes programs created by `parse()` from `src/parser.js`; forged program representations are also checked against the one-megabyte symbol ceiling.
 
 ## Quick start
 
