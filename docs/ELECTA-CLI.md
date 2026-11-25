@@ -24,7 +24,7 @@ npm start -- examples/program.el --input input.bin
 npm start -- --repl
 ```
 
-- `--fuel N` sets the instruction budget. The default is 1,000,000; zero is valid.
+- `--fuel N` sets the instruction budget. The default is 1,000,000; zero is valid; the hard maximum is 10,000,000.
 - `--input FILE` supplies raw input bytes to Electa's `READ` instruction. The default input is empty. The input limit is 1 MiB.
 - `--repl` starts the interactive console.
 
