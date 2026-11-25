@@ -175,3 +175,11 @@ test("runtime rejects sparse input arrays instead of silently zero-filling", () 
   sparse.length = 1;
   assert.throws(() => execute(parse(""), { input: sparse }), TypeError);
 });
+
+test("runtime rejects oversized forged program representations before scanning", () => {
+  const symbols = new Array(1024 * 1024 + 1);
+  assert.throws(
+    () => execute({ type: "ElectaProgram", symbols, length: symbols.length }),
+    TypeError
+  );
+});
