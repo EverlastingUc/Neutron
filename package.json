@@ -5,7 +5,7 @@
   "description": "Electa esoteric programming language and Consoler defensive toolkit",
   "type": "module",
   "engines": {
-    "node": ">=22"
+    "node": "^22 || ^24 || ^26"
   },
   "scripts": {
     "start": "node src/cli.js",
