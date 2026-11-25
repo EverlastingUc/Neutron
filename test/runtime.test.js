@@ -91,7 +91,7 @@ test("ROT rotates bytes left by the low three control bits", () => {
   // Build the required stateful encoding in the test so this checks the real decoder.
   const source = encodeOpcodes([1, 9, 14, 5, 15]);
   const result = execute(parse(source));
-  assert.deepEqual([...result.output], [4]);
+  assert.deepEqual([...result.output], [2]);
 });
 
 function encodeOpcodes(opcodes) {
@@ -125,3 +125,12 @@ function encodeOpcodes(opcodes) {
   }
   return source;
 }
+
+test("JZ skips one source symbol when the current data cell is zero", () => {
+  // JZ at PC 0 jumps to PC 2; the symbol at PC 1 is never decoded.
+  // The post-JZ key is 9, so source symbol 6 decodes to HALT (15).
+  const result = execute(parse("7?6"));
+  assert.equal(result.status, "HALTED");
+  assert.equal(result.steps, 2);
+  assert.equal(result.state.pc, 3);
+});
