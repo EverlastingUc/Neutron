@@ -1,0 +1,17 @@
+{
+  "name": "neutron-electa",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Electa esoteric programming language and Consoler defensive toolkit",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node src/cli.js",
+    "electa": "node src/cli.js",
+    "test": "node --test",
+    "test:watch": "node --test --watch"
+  },
+  "license": "MIT"
+}
