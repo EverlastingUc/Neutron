@@ -22,4 +22,4 @@ npm start -- --version
 npm start -- --repl
 ```
 
-Run a source file with `npm start -- path/to/program.el`. See the [language specification](docs/ELECTA-LANGUAGE-SPEC.md), [runtime API](docs/ELECTA-RUNTIME.md), and [CLI/REPL guide](docs/ELECTA-CLI.md) for details. The project uses Node.js built-ins and has no runtime dependencies.
+Run a source file with `npm start -- path/to/program.el`. See the [language specification](docs/ELECTA-LANGUAGE-SPEC.md), [runtime API](docs/ELECTA-RUNTIME.md), and [CLI/REPL guide](docs/ELECTA-CLI.md) for details. The [starter challenge suite](challenges/README.md) is exercised by `npm test`; the [difficulty benchmark protocol](docs/ELECTA-DIFFICULTY-BENCHMARK.md) defines how comparative claims will be evaluated. The project uses Node.js built-ins and has no runtime dependencies.
