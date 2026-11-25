@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { readFile, stat } from "node:fs/promises";
+import { open } from "node:fs/promises";
 import { createInterface } from "node:readline";
 import { pathToFileURL } from "node:url";
 import { resolve } from "node:path";
@@ -93,15 +93,31 @@ function writeDiagnostic(error, stderr) {
 }
 
 async function readBoundedFile(filePath, maxBytes, errorCode, label) {
-  const fileInfo = await stat(filePath);
-  if (fileInfo.size > maxBytes) {
-    throw new ElectaRuntimeError(`${label} exceeds the 1 MiB limit.`, { code: errorCode });
+  const handle = await open(filePath, "r");
+  try {
+    const fileInfo = await handle.stat();
+    if (!fileInfo.isFile()) throw new Error(`${label} must be a regular file.`);
+    if (fileInfo.size > maxBytes) {
+      throw new ElectaRuntimeError(`${label} exceeds the 1 MiB limit.`, { code: errorCode });
+    }
+
+    const chunks = [];
+    const chunk = Buffer.alloc(Math.min(64 * 1024, maxBytes + 1));
+    let total = 0;
+    while (total <= maxBytes) {
+      const length = Math.min(chunk.length, maxBytes + 1 - total);
+      const { bytesRead } = await handle.read(chunk, 0, length, null);
+      if (bytesRead === 0) break;
+      chunks.push(Buffer.from(chunk.subarray(0, bytesRead)));
+      total += bytesRead;
+    }
+    if (total > maxBytes) {
+      throw new ElectaRuntimeError(`${label} exceeds the 1 MiB limit.`, { code: errorCode });
+    }
+    return Buffer.concat(chunks, total);
+  } finally {
+    await handle.close();
   }
-  const bytes = await readFile(filePath);
-  if (bytes.length > maxBytes) {
-    throw new ElectaRuntimeError(`${label} exceeds the 1 MiB limit.`, { code: errorCode });
-  }
-  return bytes;
 }
 
 async function runFile(filePath, options, io) {
