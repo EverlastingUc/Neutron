@@ -15,7 +15,7 @@ All project work is currently tracked directly on `main`. Consoler's [threat mod
 
 ## Development
 
-Requirements: Node.js 22 or newer. Electa now includes a lexer, parser, reference runtime, canonical output formatter, file runner, and line-oriented REPL.
+Requirements: Node.js 22, 24, or 26 LTS. Electa now includes a lexer, parser, reference runtime, canonical output formatter, file runner, and line-oriented REPL.
 
 ```sh
 npm test
