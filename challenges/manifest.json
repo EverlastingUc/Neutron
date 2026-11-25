@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "description": "Deterministic starter conformance and puzzle fixtures for Electa.",
+  "fixtures": [
+    {
+      "id": "001-byte-one",
+      "source": "challenges/starter/001-byte-one.el",
+      "task": "Emit the byte value 1 and halt.",
+      "expected": "< [ ~01 ] ; HALTED >"
+    },
+    {
+      "id": "002-conditional-skip",
+      "source": "challenges/starter/002-conditional-skip.el",
+      "task": "Exercise JZ with a zero data cell and skip one source symbol.",
+      "expected": "< [ ] ; HALTED >"
+    },
+    {
+      "id": "003-read-emit",
+      "source": "challenges/starter/003-read-emit.el",
+      "task": "Read one input byte, emit it, and halt.",
+      "inputHex": "41",
+      "expected": "< [ ~41 ] ; HALTED >"
+    },
+    {
+      "id": "004-backward-jump",
+      "source": "challenges/starter/004-backward-jump.el",
+      "task": "Trigger a backward JNZ loop and stop at the supplied fuel boundary.",
+      "fuel": 2,
+      "expected": "< [ ] ; FUEL >"
+    },
+    {
+      "id": "005-reserved-opcode",
+      "source": "challenges/starter/005-reserved-opcode.el",
+      "task": "Confirm that a reserved decoded opcode fails deterministically.",
+      "expectedError": "E002"
+    }
+  ]
+}
