@@ -3,6 +3,7 @@ const MAX_FUEL = 10_000_000;
 const DEFAULT_MAX_INPUT_BYTES = 1024 * 1024;
 const MAX_INPUT_BYTES = 16 * 1024 * 1024;
 const TAPE_SIZE = 256;
+const MAX_PROGRAM_SYMBOLS = 1024 * 1024;
 
 export class ElectaRuntimeError extends Error {
   constructor(message, { code = "E002", line, column, offset } = {}) {
@@ -55,7 +56,8 @@ function validateProgram(program) {
     typeof program !== "object" ||
     program.type !== "ElectaProgram" ||
     !Array.isArray(program.symbols) ||
-    program.length !== program.symbols.length
+    program.length !== program.symbols.length ||
+    program.length > MAX_PROGRAM_SYMBOLS
   ) {
     throw new TypeError("Electa runtime expects a program returned by parse().");
   }
