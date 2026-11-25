@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { readFile } from "node:fs/promises";
+import { readFile, stat } from "node:fs/promises";
 import { createInterface } from "node:readline";
 import { pathToFileURL } from "node:url";
 import { resolve } from "node:path";
@@ -11,6 +11,7 @@ import { formatResult } from "./format.js";
 const VERSION = "0.1.0";
 const MAX_SOURCE_BYTES = 1024 * 1024;
 const MAX_INPUT_BYTES = 1024 * 1024;
+const MAX_FUEL = 10_000_000;
 
 function printHelp(stdout) {
   stdout.write([
@@ -49,8 +50,8 @@ function parseArguments(args) {
       }
       index += 1;
       if (arg === "--fuel") {
-        if (!/^(0|[1-9][0-9]*)$/.test(value) || !Number.isSafeInteger(Number(value))) {
-          throw new Error("--fuel must be a non-negative safe integer.");
+        if (!/^(0|[1-9][0-9]*)$/.test(value) || !Number.isSafeInteger(Number(value)) || Number(value) > MAX_FUEL) {
+          throw new Error(`--fuel must be an integer from 0 through ${MAX_FUEL}.`);
         }
         options.fuel = Number(value);
       } else {
@@ -91,15 +92,24 @@ function writeDiagnostic(error, stderr) {
   stderr.write(`Electa ${code}${location}: ${error.message}\n`);
 }
 
+async function readBoundedFile(filePath, maxBytes, errorCode, label) {
+  const fileInfo = await stat(filePath);
+  if (fileInfo.size > maxBytes) {
+    throw new ElectaRuntimeError(`${label} exceeds the 1 MiB limit.`, { code: errorCode });
+  }
+  const bytes = await readFile(filePath);
+  if (bytes.length > maxBytes) {
+    throw new ElectaRuntimeError(`${label} exceeds the 1 MiB limit.`, { code: errorCode });
+  }
+  return bytes;
+}
+
 async function runFile(filePath, options, io) {
-  const sourceBytes = await readFile(filePath);
+  const sourceBytes = await readBoundedFile(filePath, MAX_SOURCE_BYTES, "E005", "Source");
   const source = decodeSource(sourceBytes);
   let input = new Uint8Array(0);
   if (options.inputPath) {
-    input = new Uint8Array(await readFile(options.inputPath));
-    if (input.length > MAX_INPUT_BYTES) {
-      throw new ElectaRuntimeError("Input exceeds the 1 MiB limit.", { code: "E004" });
-    }
+    input = new Uint8Array(await readBoundedFile(options.inputPath, MAX_INPUT_BYTES, "E004", "Input"));
   }
   const result = execute(parse(source), {
     fuel: options.fuel,
