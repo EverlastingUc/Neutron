@@ -114,3 +114,18 @@ test("diagnostics contain sink failures and validate configuration", () => {
   assert.throws(() => createDiagnostics({ mode: "test" }), TypeError);
   assert.throws(() => createDiagnostics({ sink: true }), TypeError);
 });
+
+test("Consoler contains proxy traps and asynchronous callback mistakes", () => {
+  const consoler = createConsoler();
+  const hostileProxy = new Proxy({}, {
+    getPrototypeOf() {
+      throw new Error("proxy trap");
+    }
+  });
+  assert.equal(consoler.reportSignal(hostileProxy), false);
+
+  const asyncCallback = createConsoler({
+    onSignal: () => Promise.reject(new Error("async callback is unsupported"))
+  });
+  assert.equal(asyncCallback.reportSignal({ type: "state-mismatch" }), false);
+});
