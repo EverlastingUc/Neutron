@@ -164,3 +164,14 @@ test("JZ skips one source symbol when the current data cell is zero", () => {
   assert.equal(result.steps, 2);
   assert.equal(result.state.pc, 3);
 });
+
+test("runtime enforces hard fuel and input configuration ceilings", () => {
+  assert.throws(() => execute(parse(""), { fuel: 10_000_001 }), RangeError);
+  assert.throws(() => execute(parse(""), { maxInputBytes: 16 * 1024 * 1024 + 1 }), RangeError);
+});
+
+test("runtime rejects sparse input arrays instead of silently zero-filling", () => {
+  const sparse = [];
+  sparse.length = 1;
+  assert.throws(() => execute(parse(""), { input: sparse }), TypeError);
+});
