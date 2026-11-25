@@ -11,10 +11,9 @@ The stable-release plan and phase gates are tracked in [ROADMAP.md](ROADMAP.md).
 
 All project work is currently tracked directly on `main`.
 
-
 ## Development
 
-Requirements: Node.js 20 or newer. Electa currently has a CLI scaffold; the interpreter is not implemented yet.
+Requirements: Node.js 20 or newer. The Electa lexer, parser, and reference runtime are implemented; CLI file execution and the REPL are still pending.
 
 ```sh
 npm test
@@ -22,4 +21,4 @@ npm start -- --help
 npm start -- --version
 ```
 
-The project uses Node.js built-in test runner and currently has no runtime dependencies. See [the language specification](docs/ELECTA-LANGUAGE-SPEC.md) before implementing runtime behavior.
+The project uses Node.js built-in test runner and currently has no runtime dependencies. Read the [language specification](docs/ELECTA-LANGUAGE-SPEC.md) and [runtime API guide](docs/ELECTA-RUNTIME.md) for implementation details.
