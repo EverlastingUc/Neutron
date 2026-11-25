@@ -5,6 +5,8 @@
 - **Electa** — an intentionally difficult esoteric programming language. Source files use the `.el` extension.
 - **Consoler** — a defensive toolkit for opt-in application anomaly signals and development-only diagnostics. It cannot block DevTools or make hacking impossible; sensitive decisions remain server-side.
 
+**Current status:** package baseline `0.1.0` is pre-stable. The `v1.0.0` release remains gated on the cross-platform CI matrix and final acceptance checklist.
+
 ## Getting started
 
 The stable-release plan and phase gates are tracked in [ROADMAP.md](ROADMAP.md). The reusable delegation brief for another AI working on Consoler is [docs/CONSOLER-AI-PROMPT.md](docs/CONSOLER-AI-PROMPT.md).
