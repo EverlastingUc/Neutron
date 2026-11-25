@@ -22,6 +22,9 @@ export function parseSymbols(symbols) {
   if (!Array.isArray(symbols)) {
     throw new TypeError("Electa parser expects an array of lexer symbols.");
   }
+  if (symbols.length > 1024 * 1024) {
+    throw new ElectaParseError("Token stream exceeds the source symbol limit.", { code: "E007" });
+  }
 
   const validated = [];
   let previousOffset = -1;
