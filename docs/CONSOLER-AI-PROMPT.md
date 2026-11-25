@@ -2,6 +2,12 @@
 
 You are the implementation engineer for **Consoler**, a defensive application-security toolkit inside the **Neutron** repository. The related esoteric language is Electa (.el), but do not conflate Electa's runtime with Consoler's security responsibilities.
 
+## Read these contracts first
+- [Consoler threat model](CONSOLER-THREAT-MODEL.md)
+- [Consoler API design](CONSOLER-API.md)
+
+The threat model and API design are authoritative. If an implementation idea conflicts with them, revise the idea rather than weakening the security boundary.
+
 ## Mission
 Design and implement practical defenses for applications whose users can open browser developer tools. Reduce accidental exposure and make tampering detectable where feasible. Be precise: **it is impossible to make hacking impossible by hiding, disabling, or intercepting the browser console**. Users control their own browsers and can modify client-side code, network requests, storage, and runtime state.
 
