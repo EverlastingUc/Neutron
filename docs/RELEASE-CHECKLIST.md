@@ -5,7 +5,7 @@ This checklist is a release gate, not a promise that the project is already stab
 ## Repository and build
 
 - [ ] All work is committed to `main`; working tree is clean.
-- [ ] `npm test` passes on Node.js 22, 24, and 26 on Linux, Windows, and macOS.
+- [ ] `npm test` passes on Node.js 22, 24, and 26 LTS on Linux, Windows, and macOS.
 - [ ] GitHub Actions matrix is green for the release commit.
 - [ ] `npm pack --dry-run` contents have been reviewed.
 - [ ] No unreviewed dependencies, secrets, generated artifacts, or local files are included.
