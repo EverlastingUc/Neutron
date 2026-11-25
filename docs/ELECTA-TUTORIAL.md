@@ -4,7 +4,7 @@ This tutorial uses the reference interpreter in Neutron. You do not need to know
 
 ## 1. Requirements
 
-Install Node.js 20 or newer, then open a terminal in the Neutron repository.
+Install Node.js 22 or newer, then open a terminal in the Neutron repository.
 
 Run the tests:
 
