@@ -48,7 +48,7 @@ Out of scope for v1.0.0: native machine-code compilation, a JIT, a package regis
 - [x] **11 — Quality & security hardening**: deterministic property/fuzz tests, adversarial Consoler inputs, source/input/program/fuel ceilings, bounded CLI file reads, dependency inventory, and residual-risk review are implemented and documented.
 - [x] **12 — Documentation & examples**: beginner Electa tutorial, language/runtime/CLI references, Consoler integration and privacy guides, FAQ, architecture diagrams, runnable `.el` examples, and example conformance tests.
 - [x] **13A — Release infrastructure**: MIT license, changelog, semantic versioning policy, package-content whitelist, dependency-free release preflight, nine-way OS/Node CI matrix, and v1.0.0 acceptance checklist are in place.
-- [ ] **13B — Release verification**: require green CI on Linux/Windows/macOS with Node 22/24/26, review actual package contents, complete any external benchmark/security review required for release, and only then tag a stable version.
+- [ ] **13B — Release verification**: require green CI on Linux/Windows/macOS with Node 22/24/26 LTS, review actual package contents, complete any external benchmark/security review required for release, and only then tag a stable version. The matrix is configured; no remote green result has been confirmed yet.
 
 ## Completion policy
 
