@@ -123,3 +123,18 @@ test("CLI rejects fuel budgets above the hard ceiling", () => {
   assert.equal(result.status, 2);
   assert.match(result.stderr, /--fuel must be an integer/);
 });
+
+test("CLI rejects oversized input files before loading them", () => {
+  const directory = mkdtempSync(join(tmpdir(), "electa-cli-"));
+  try {
+    const source = join(directory, "read.el");
+    const input = join(directory, "large.bin");
+    writeFileSync(source, "6");
+    writeFileSync(input, Buffer.alloc(1024 * 1024 + 1));
+    const result = run([source, "--input", input]);
+    assert.equal(result.status, 2);
+    assert.match(result.stderr, /Electa E004/);
+  } finally {
+    rmSync(directory, { recursive: true, force: true });
+  }
+});
