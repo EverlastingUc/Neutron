@@ -2,7 +2,7 @@
 
 > Repository: **Neutron** · Language: **Electa** · Source extension: **.el** · Defensive console-security toolkit: **Consoler**
 
-This roadmap defines the first stable release. Work is performed directly on **main**, as requested. Each phase must be completed, tested, documented, and committed before the next phase begins.
+This roadmap defines the first stable release. Work is performed directly on **main**, as requested. Engineering phases may proceed while the independent difficulty study runs separately; a comparative difficulty claim must be omitted unless supported by that study. The stable release remains blocked on the release-verification gate.
 
 ## Product boundaries
 
@@ -47,11 +47,12 @@ Out of scope for v1.0.0: native machine-code compilation, a JIT, a package regis
 - [x] **10 — Consoler implementation**: add opt-in bounded signal reporting, validated event types/codes, development-only diagnostics, callback failure containment, and a tested server-side authorization example. No DevTools blocking or client-side security claims.
 - [x] **11 — Quality & security hardening**: deterministic property/fuzz tests, adversarial Consoler inputs, source/input/program/fuel ceilings, bounded CLI file reads, dependency inventory, and residual-risk review are implemented and documented.
 - [x] **12 — Documentation & examples**: beginner Electa tutorial, language/runtime/CLI references, Consoler integration and privacy guides, FAQ, architecture diagrams, runnable `.el` examples, and example conformance tests.
-- [ ] **13 — Release engineering**: CI, cross-platform checks, versioning, changelog, license review, reproducible release checks, and v1.0.0 acceptance checklist.
+- [x] **13A — Release infrastructure**: MIT license, changelog, semantic versioning policy, package-content whitelist, dependency-free release preflight, nine-way OS/Node CI matrix, and v1.0.0 acceptance checklist are in place.
+- [ ] **13B — Release verification**: require green CI on Linux/Windows/macOS with Node 20/22/24, review actual package contents, complete any external benchmark/security review required for release, and only then tag a stable version.
 
 ## Completion policy
 
-A phase is complete only when its deliverables exist in the repository, tests pass (where applicable), documentation is updated, and its checklist item is marked complete. Never claim a test was run unless it actually ran. Keep all changes on main; do not create feature branches or open pull requests unless the owner changes this instruction.
+A phase is complete only when its deliverables exist in the repository, tests pass (where applicable), documentation is updated, and its checklist item is marked complete. Phase 8B is an independent research track and is not a release blocker if no comparative difficulty claim is made. Phase 13B is mandatory before a stable tag. Never claim a test was run unless it actually ran. Keep all changes on main; do not create feature branches or open pull requests unless the owner changes this instruction.
 
 ## Acceptance gates for v1.0.0
 
