@@ -36,3 +36,10 @@ test("parser rejects duplicate or out-of-order source offsets", () => {
 test("parser preserves lexer diagnostics for invalid source", () => {
   assert.throws(() => parse("A#"), (error) => error.code === "E001");
 });
+
+test("parser rejects token streams above the source symbol limit", () => {
+  assert.throws(
+    () => parseSymbols(new Array(1024 * 1024 + 1)),
+    (error) => error instanceof ElectaParseError && error.code === "E007"
+  );
+});
