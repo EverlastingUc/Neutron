@@ -13,12 +13,13 @@ All project work is currently tracked directly on `main`.
 
 ## Development
 
-Requirements: Node.js 20 or newer. The Electa lexer, parser, and reference runtime are implemented; CLI file execution and the REPL are still pending.
+Requirements: Node.js 20 or newer. Electa now includes a lexer, parser, reference runtime, canonical output formatter, file runner, and line-oriented REPL.
 
 ```sh
 npm test
 npm start -- --help
 npm start -- --version
+npm start -- --repl
 ```
 
-The project uses Node.js built-in test runner and currently has no runtime dependencies. Read the [language specification](docs/ELECTA-LANGUAGE-SPEC.md) and [runtime API guide](docs/ELECTA-RUNTIME.md) for implementation details.
+Run a source file with `npm start -- path/to/program.el`. See the [language specification](docs/ELECTA-LANGUAGE-SPEC.md), [runtime API](docs/ELECTA-RUNTIME.md), and [CLI/REPL guide](docs/ELECTA-CLI.md) for details. The project uses Node.js built-ins and has no runtime dependencies.
