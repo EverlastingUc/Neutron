@@ -36,7 +36,7 @@ Out of scope for v1.0.0: native machine-code compilation, a JIT, a package regis
 - [x] **0 — Repository baseline & project contract**: inspect repository, establish project structure, conventions, threat model, and roadmap.
 - [x] **1 — Language design**: specify Electa's values, source encoding, instruction set, state machine, I/O, errors, and canonical output grammar.
 - [x] **2 — Toolchain foundation**: choose a maintainable implementation stack; create CLI skeleton, configuration, formatting/linting, and test runner.
-- [ ] **3 — Lexer and source model**: tokenize .el input, track spans, reject malformed encodings deterministically.
+- [x] **3 — Lexer and source model**: tokenize .el input, track spans, reject malformed encodings deterministically.
 - [ ] **4 — Parser and validation**: parse source into a validated representation; define precise syntax and error behavior.
 - [ ] **5 — Electa runtime**: implement the abstract machine, memory model, instruction semantics, execution fuel, and bounded execution.
 - [ ] **6 — Canonical Electa I/O**: implement the Electa value grammar and ensure every language-level REPL result is rendered as Electa, never raw host values.
