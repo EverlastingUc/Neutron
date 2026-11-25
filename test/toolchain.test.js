@@ -89,3 +89,31 @@ test("CLI rejects invalid UTF-8 source files", () => {
     rmSync(directory, { recursive: true, force: true });
   }
 });
+
+test("CLI reads byte input from a file", () => {
+  const directory = mkdtempSync(join(tmpdir(), "electa-cli-"));
+  try {
+    const source = join(directory, "read.el");
+    const input = join(directory, "input.bin");
+    writeFileSync(source, "6DV", "utf8");
+    writeFileSync(input, Buffer.from([65]));
+    const result = run([source, "--input", input]);
+    assert.equal(result.status, 0);
+    assert.equal(result.stdout, "< [ ~41 ] ; HALTED >\\n");
+  } finally {
+    rmSync(directory, { recursive: true, force: true });
+  }
+});
+
+test("CLI enforces the source byte limit before parsing", () => {
+  const directory = mkdtempSync(join(tmpdir(), "electa-cli-"));
+  try {
+    const source = join(directory, "large.el");
+    writeFileSync(source, Buffer.alloc(1024 * 1024 + 1, 48));
+    const result = run([source]);
+    assert.equal(result.status, 2);
+    assert.match(result.stderr, /Electa E005/);
+  } finally {
+    rmSync(directory, { recursive: true, force: true });
+  }
+});
