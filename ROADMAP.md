@@ -45,7 +45,7 @@ Out of scope for v1.0.0: native machine-code compilation, a JIT, a package regis
 - [ ] **8B — Empirical difficulty study**: compare Electa against matched esoteric-language tasks with independent participants. The benchmark protocol is published, but no participant study has been run; do not claim a measured difficulty ranking.
 - [x] **9 — Consoler threat model & API**: document realistic attacker capabilities, protected assets, non-goals, signal handling, privacy requirements, and the safe opt-in API contract.
 - [x] **10 — Consoler implementation**: add opt-in bounded signal reporting, validated event types/codes, development-only diagnostics, callback failure containment, and a tested server-side authorization example. No DevTools blocking or client-side security claims.
-- [ ] **11 — Quality & security hardening**: fuzzing, adversarial tests, resource exhaustion tests, dependency review, and security documentation.
+- [x] **11 — Quality & security hardening**: deterministic property/fuzz tests, adversarial Consoler inputs, source/input/program/fuel ceilings, bounded CLI file reads, dependency inventory, and residual-risk review are implemented and documented.
 - [ ] **12 — Documentation & examples**: beginner setup, language tutorial, reference, REPL guide, Consoler integration, FAQ, and architecture diagrams.
 - [ ] **13 — Release engineering**: CI, cross-platform checks, versioning, changelog, license review, reproducible release checks, and v1.0.0 acceptance checklist.
 
