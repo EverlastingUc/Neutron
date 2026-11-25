@@ -43,7 +43,7 @@ Out of scope for v1.0.0: native machine-code compilation, a JIT, a package regis
 - [x] **7 — CLI and REPL**: run files, interactive input, deterministic output, exit codes, and diagnostics. File execution, byte-input files, bounded UTF-8 source loading, line-oriented REPL, and CLI documentation are implemented and tested.
 - [x] **8A — Difficulty mechanics & challenge suite**: the stateful six-bit decoder, post-instruction key evolution, dual circular tapes, and conditional source-symbol jumps are specified and implemented; five executable challenge fixtures are covered by automated conformance tests.
 - [ ] **8B — Empirical difficulty study**: compare Electa against matched esoteric-language tasks with independent participants. The benchmark protocol is published, but no participant study has been run; do not claim a measured difficulty ranking.
-- [ ] **9 — Consoler threat model & API**: document realistic attacker capabilities, protected assets, non-goals, and safe integration contract.
+- [x] **9 — Consoler threat model & API**: document realistic attacker capabilities, protected assets, non-goals, signal handling, privacy requirements, and the safe opt-in API contract.
 - [ ] **10 — Consoler implementation**: add opt-in defensive hooks, integrity/tamper telemetry, safe debug gating, and server-verification examples without claiming client-side enforcement is authoritative.
 - [ ] **11 — Quality & security hardening**: fuzzing, adversarial tests, resource exhaustion tests, dependency review, and security documentation.
 - [ ] **12 — Documentation & examples**: beginner setup, language tutorial, reference, REPL guide, Consoler integration, FAQ, and architecture diagrams.
