@@ -52,10 +52,10 @@ async function main() {
     throw new Error("CHANGELOG.md does not contain the current package version.");
   }
 
-  process.stdout.write(`Release preflight passed for ${packageJson.name}@${packageJson.version}.\\n`);
+  process.stdout.write(`Release preflight passed for ${packageJson.name}@${packageJson.version}.\n`);
 }
 
 main().catch((error) => {
-  process.stderr.write(`Release preflight failed: ${error.message}\\n`);
+  process.stderr.write(`Release preflight failed: ${error.message}\n`);
   process.exitCode = 1;
 });
