@@ -12,7 +12,8 @@
     "electa": "node src/cli.js",
     "test": "node --test",
     "test:watch": "node --test --watch",
-    "repl": "node src/cli.js --repl"
+    "repl": "node src/cli.js --repl",
+    "release:check": "node scripts/release-preflight.js"
   },
   "license": "MIT",
   "files": [
