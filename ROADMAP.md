@@ -40,7 +40,7 @@ Out of scope for v1.0.0: native machine-code compilation, a JIT, a package regis
 - [x] **4 — Parser and validation**: parse source into a validated representation; define precise syntax and error behavior.
 - [x] **5 — Electa runtime**: implement the abstract machine, memory model, instruction semantics, execution fuel, and bounded execution. Runtime API documented; conformance tests cover arithmetic, tape wraparound, I/O, jumps, reserved opcodes, and fuel.
 - [x] **6 — Canonical Electa I/O**: implement the Electa value grammar and ensure every language-level REPL result is rendered as Electa, never raw host values. Byte, sequence, and execution-result formatters are implemented and tested against the specification.
-- [ ] **7 — CLI and REPL**: run files, interactive input, deterministic output, exit codes, and diagnostics.
+- [x] **7 — CLI and REPL**: run files, interactive input, deterministic output, exit codes, and diagnostics. File execution, byte-input files, bounded UTF-8 source loading, line-oriented REPL, and CLI documentation are implemented and tested.
 - [ ] **8 — Difficulty mechanisms**: implement the language's distinctive obfuscation/transformation mechanics and publish challenge fixtures; measure difficulty rather than merely asserting it.
 - [ ] **9 — Consoler threat model & API**: document realistic attacker capabilities, protected assets, non-goals, and safe integration contract.
 - [ ] **10 — Consoler implementation**: add opt-in defensive hooks, integrity/tamper telemetry, safe debug gating, and server-verification examples without claiming client-side enforcement is authoritative.
