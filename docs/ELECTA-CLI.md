@@ -1,6 +1,6 @@
 # Electa CLI and REPL
 
-The command-line interface is implemented in `src/cli.js` and requires Node.js 20 or newer.
+The command-line interface is implemented in `src/cli.js` and requires Node.js 22 or newer.
 
 ## Run a source file
 
