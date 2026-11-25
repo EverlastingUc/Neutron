@@ -9,6 +9,7 @@ This project follows Semantic Versioning. Until v1.0.0, public APIs and language
 ### Added
 - Release acceptance checklist, dependency-free release preflight, package-content whitelist, and cross-platform CI coverage on supported Node.js LTS lines.
 - Raised the minimum Node.js version to 22 after Node.js 20 reached end of life.
+- Updated GitHub Actions to Node 24-compatible checkout/setup-node releases.
 
 ## [0.1.0] - 2026-11-25
 
